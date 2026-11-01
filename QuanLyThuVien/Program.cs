@@ -1,12 +1,31 @@
-﻿namespace QuanLyThuVien;
+﻿using System;
+using System.Windows.Forms;
+using QuanLyThuVien.Data;
 
-internal static class Program
+namespace QuanLyThuVien
 {
-    [STAThread]
-    static void Main()
+    internal static class Program
     {
-        ApplicationConfiguration.Initialize();
+        [STAThread]
+        static void Main()
+        {
+            ApplicationConfiguration.Initialize();
 
-        Application.Run(new Form1());
+            try
+            {
+                Database.Initialize();
+                
+                Application.Run(new Form1());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Không thể khởi tạo Database!\n\n" + ex.Message,
+                    "Lỗi Database",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
     }
 }
